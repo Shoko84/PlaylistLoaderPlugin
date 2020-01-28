@@ -12,7 +12,7 @@ namespace PlaylistLoaderPlugin.HarmonyPatches
     [HarmonyPatch(typeof(PlaylistsViewController), "SetData",
         new Type[] { // Specify the types of SetDataFromLevelAsync's parameters here.
         typeof(IAnnotatedBeatmapLevelCollection[]), typeof(int), typeof(bool)})]
-    class PlaylistCollectionOverride
+    internal class PlaylistCollectionOverride
     {
         private static IAnnotatedBeatmapLevelCollection[] loadedPlaylists;
         /// <summary>

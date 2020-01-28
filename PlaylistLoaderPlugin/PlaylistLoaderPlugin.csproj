@@ -119,6 +119,7 @@
     <Compile Include="Logger.cs" />
     <Compile Include="PluginConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\PlaylistsFlowCoordinator.cs" />
     <Compile Include="UI\PluginUI.cs" />
   </ItemGroup>
   <ItemGroup>

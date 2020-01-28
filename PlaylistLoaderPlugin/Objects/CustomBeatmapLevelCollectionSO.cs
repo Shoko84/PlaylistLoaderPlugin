@@ -2,9 +2,8 @@
 using UnityEngine;
 
 namespace PlaylistLoaderPlugin
-{
-	// Token: 0x02000150 RID: 336
-	public class CustomBeatmapLevelCollectionSO : PersistentScriptableObject, IBeatmapLevelCollection
+{	
+	internal class CustomBeatmapLevelCollectionSO : PersistentScriptableObject, IBeatmapLevelCollection
 	{
 		public static CustomBeatmapLevelCollectionSO CreateInstance(IPreviewBeatmapLevel[] beatmapLevels)
 		{

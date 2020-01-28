@@ -1,27 +1,28 @@
-﻿using BeatSaberMarkupLanguage.MenuButtons;
-using PlaylistLoaderPlugin.HarmonyPatches;
+﻿using BeatSaberMarkupLanguage;
+using BeatSaberMarkupLanguage.MenuButtons;
 
 namespace PlaylistLoaderPlugin.UI
 {
     public class PluginUI : PersistentSingleton<PluginUI>
     {
-        public MenuButton refreshButton;
-
+        public MenuButton playlistsButton;
+        internal PlaylistsFlowCoordinator _playlistsflowCoordinator;
         internal void Setup()
         {
-            refreshButton = new MenuButton("Refresh Playlists", "Refresh Songs & Playlists", RefreshButtonPressed, true);
-            MenuButtons.instance.RegisterButton(refreshButton);
+            playlistsButton = new MenuButton("Manage Playlists", "Manage Beat Saber Playlists", PlaylistsButtonPressed, true);
+            MenuButtons.instance.RegisterButton(playlistsButton);
         }
 
-        internal void RefreshButtonPressed()
+        internal void PlaylistsButtonPressed()
         {
-            RefreshButtonFlow();
+            PlaylistsButtonFlow();
         }
 
-        internal void RefreshButtonFlow()
+        internal void PlaylistsButtonFlow()
         {
-            SongCore.Loader.Instance.RefreshSongs();
-            PlaylistCollectionOverride.refreshPlaylists();
+            if (_playlistsflowCoordinator == null)
+                _playlistsflowCoordinator = BeatSaberUI.CreateFlowCoordinator<PlaylistsFlowCoordinator>();
+            BeatSaberUI.MainFlowCoordinator.PresentFlowCoordinator(_playlistsflowCoordinator);
         }
     }
 }
