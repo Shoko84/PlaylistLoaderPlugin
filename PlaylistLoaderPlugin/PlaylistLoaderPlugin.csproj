@@ -119,6 +119,8 @@
     <Compile Include="Logger.cs" />
     <Compile Include="PluginConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\ViewController\PlaylistsViewController.cs" />
+    <EmbeddedResource Include="UI\BSML\PlaylistsView.bsml" />
     <Compile Include="UI\PlaylistsFlowCoordinator.cs" />
     <Compile Include="UI\PluginUI.cs" />
   </ItemGroup>
@@ -131,6 +133,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--Build Targets-->
   <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(NCrunch)' != '1'">
