@@ -11,6 +11,7 @@ namespace PlaylistLoaderPlugin.UI
     {
         public override string ResourceName => "PlaylistLoaderPlugin.UI.BSML.PlaylistsView.bsml";
         public SongsViewController songsViewController;
+        public PlaylistDetailViewController playlistDetailViewController;
 
         [UIComponent("list")]
         public CustomListTableData customListTableData;
@@ -35,6 +36,7 @@ namespace PlaylistLoaderPlugin.UI
         internal void Select(TableView tableView, int row)
         {
             songsViewController.InitSongsList(row);
+            playlistDetailViewController.Initialize(CustomPlaylistFileObject.playlists[row].description);
         }
     }
 

@@ -131,6 +131,7 @@
     <Compile Include="PluginConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="UI\BSML\SongsView.bsml" />
+    <Compile Include="UI\ViewController\PlaylistDetailViewController.cs" />
     <Compile Include="UI\ViewController\SongsViewController.cs" />
     <Compile Include="UI\ViewController\PlaylistsViewController.cs" />
     <EmbeddedResource Include="UI\BSML\PlaylistsView.bsml" />
@@ -142,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <EmbeddedResource Include="UI\BSML\PlaylistDetailView.bsml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

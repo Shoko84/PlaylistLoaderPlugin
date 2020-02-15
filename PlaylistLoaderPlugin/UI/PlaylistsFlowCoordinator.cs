@@ -9,12 +9,16 @@ namespace PlaylistLoaderPlugin.UI
         private NavigationController _playlistsNavigationController;
         private PlaylistsViewController _playlistsViewController;
         private SongsViewController _songsViewController;
+        private PlaylistDetailViewController _playlistDetailViewController;
+
         public void Awake()
         {
             _playlistsViewController = BeatSaberUI.CreateViewController<PlaylistsViewController>();
             _playlistsNavigationController = BeatSaberUI.CreateViewController<NavigationController>();
             _songsViewController = BeatSaberUI.CreateViewController<SongsViewController>();
+            _playlistDetailViewController = BeatSaberUI.CreateViewController<PlaylistDetailViewController>();
             _playlistsViewController.songsViewController = _songsViewController;
+            _playlistsViewController.playlistDetailViewController = _playlistDetailViewController;
         }
         protected override void DidActivate(bool firstActivation, ActivationType activationType)
         {
@@ -25,6 +29,7 @@ namespace PlaylistLoaderPlugin.UI
                     showBackButton = true;
                     ProvideInitialViewControllers(_playlistsNavigationController, _playlistsViewController);
                     PushViewControllerToNavigationController(_playlistsNavigationController, _songsViewController);
+                    SetRightScreenViewController(_playlistDetailViewController);
                     title = "Playlist Manager";
                 }
             }
