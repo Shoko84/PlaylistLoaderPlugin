@@ -1,0 +1,5 @@
+﻿<vertical child-control-height='false'>
+  <page-button event-click='list#PageUp' on-click='pageUpPressed' direction='Up'></page-button>
+  <list id='list' expand-cell='true' select-cell='listSelect'></list>
+  <page-button id='songsPageDown' event-click='list#PageDown' on-click='pageDownPressed' direction='Down'></page-button>
+</vertical>

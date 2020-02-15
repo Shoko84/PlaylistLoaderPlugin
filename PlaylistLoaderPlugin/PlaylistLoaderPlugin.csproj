@@ -130,6 +130,8 @@
     <Compile Include="Logger.cs" />
     <Compile Include="PluginConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="UI\BSML\SongsView.bsml" />
+    <Compile Include="UI\ViewController\SongsViewController.cs" />
     <Compile Include="UI\ViewController\PlaylistsViewController.cs" />
     <EmbeddedResource Include="UI\BSML\PlaylistsView.bsml" />
     <Compile Include="UI\PlaylistsFlowCoordinator.cs" />
