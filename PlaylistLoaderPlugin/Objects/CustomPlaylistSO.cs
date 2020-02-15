@@ -2,7 +2,7 @@
 using Polyglot;
 using UnityEngine;
 
-namespace PlaylistLoaderPlugin
+namespace PlaylistLoaderPlugin.Objects
 {
 	internal class CustomPlaylistSO : ScriptableObject, IPlaylist, IAnnotatedBeatmapLevelCollection
 	{
@@ -17,7 +17,7 @@ namespace PlaylistLoaderPlugin
 			{
 				imageBytes = Convert.FromBase64String(coverImage.Substring(coverImage.IndexOf(",") + 1));
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				imageBytes = Convert.FromBase64String(DEFAULT_IMAGE.Substring(DEFAULT_IMAGE.IndexOf(",") + 1));
 			}

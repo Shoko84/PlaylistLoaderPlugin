@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace PlaylistLoaderPlugin
+namespace PlaylistLoaderPlugin.Objects
 {	
 	internal class CustomBeatmapLevelCollectionSO : PersistentScriptableObject, IBeatmapLevelCollection
 	{
