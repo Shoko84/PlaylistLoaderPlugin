@@ -124,7 +124,7 @@
     <Compile Include="Objects\CustomBeatmapLevelCollectionSO.cs" />
     <Compile Include="Objects\CustomPlaylistFileObject.cs" />
     <Compile Include="Objects\CustomPlaylistSO.cs" />
-    <Compile Include="HarmonyPatches\LevelListTableCellOverride.cs" />
+    <Compile Include="HarmonyPatches\PlaylistCollectionOverride.cs" />
     <Compile Include="LoadPlaylistScript.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Logger.cs" />

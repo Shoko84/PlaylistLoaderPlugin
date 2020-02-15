@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using SongCore;
 using System.Linq;
@@ -8,11 +6,13 @@ using System;
 
 namespace PlaylistLoaderPlugin.Objects
 {
-    internal class CustomPlaylistFileObject
+    public class CustomPlaylistFileObject
     {
         public CustomPlaylistSO customPlaylistSO { get; }
         public string description { get; }
+        public string author { get; }
 
+        public static List<CustomPlaylistFileObject> playlists = new List<CustomPlaylistFileObject>();
         public CustomPlaylistFileObject(JObject playlistJSON)
         {
             if (playlistJSON["songs"] != null)
@@ -46,12 +46,15 @@ namespace PlaylistLoaderPlugin.Objects
                 string playlistTitle = "Untitled Playlist";
                 string playlistImage = CustomPlaylistSO.DEFAULT_IMAGE;
                 description = "";
+                author = "";
                 if ((string)playlistJSON["playlistTitle"] != null)
                     playlistTitle = (string)playlistJSON["playlistTitle"];
                 if ((string)playlistJSON["image"] != null)
                     playlistImage = (string)playlistJSON["image"];
                 if ((string)playlistJSON["playlistDescription"] != null)
                     description = (string)playlistJSON["playlistDescription"];
+                if ((string)playlistJSON["playlistAuthor"] != null)
+                    author = (string)playlistJSON["playlistAuthor"];
                 customPlaylistSO = CustomPlaylistSO.CreateInstance(playlistTitle, playlistImage, customBeatmapLevelCollection);
             }
         }
@@ -73,6 +76,11 @@ namespace PlaylistLoaderPlugin.Objects
                 Logger.log.Warn($"Unable to match song with {(string.IsNullOrEmpty(hash) ? " unknown hash!" : ("hash " + hash + " !"))}");
             }
             return x;
+        }
+
+        public void addSelf()
+        {
+            playlists.Add(this);
         }
     }
 }

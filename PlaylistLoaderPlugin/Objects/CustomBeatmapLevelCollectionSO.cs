@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PlaylistLoaderPlugin.Objects
 {	
-	internal class CustomBeatmapLevelCollectionSO : PersistentScriptableObject, IBeatmapLevelCollection
+	public class CustomBeatmapLevelCollectionSO : PersistentScriptableObject, IBeatmapLevelCollection
 	{
 		public static CustomBeatmapLevelCollectionSO CreateInstance(IPreviewBeatmapLevel[] beatmapLevels)
 		{
