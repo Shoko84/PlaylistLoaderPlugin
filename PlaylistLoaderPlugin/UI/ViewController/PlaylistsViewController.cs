@@ -4,14 +4,15 @@ using BeatSaberMarkupLanguage.Components;
 using PlaylistLoaderPlugin.Objects;
 using PlaylistLoaderPlugin.HarmonyPatches;
 using HMUI;
+using System;
 
 namespace PlaylistLoaderPlugin.UI
 {
     public class PlaylistsViewController : BSMLResourceViewController
     {
         public override string ResourceName => "PlaylistLoaderPlugin.UI.BSML.PlaylistsView.bsml";
-        public SongsViewController songsViewController;
-        public PlaylistDetailViewController playlistDetailViewController;
+
+        public Action<CustomPlaylistFileObject> didSelectPlaylist;
 
         [UIComponent("list")]
         public CustomListTableData customListTableData;
@@ -35,14 +36,13 @@ namespace PlaylistLoaderPlugin.UI
         [UIAction("listSelect")]
         internal void Select(TableView tableView, int row)
         {
-            songsViewController.InitSongsList(row);
-            playlistDetailViewController.Initialize(CustomPlaylistFileObject.playlists[row].description);
+            didSelectPlaylist?.Invoke(CustomPlaylistFileObject.playlists[row]);
         }
     }
 
     public class PlaylistCellInfo : CustomListTableData.CustomCellInfo
     {
-        private CustomPlaylistFileObject _customPlaylistFileObject;
+        public CustomPlaylistFileObject _customPlaylistFileObject { get; }
         public PlaylistCellInfo(CustomPlaylistFileObject customPlaylistFileObject) : base(customPlaylistFileObject.customPlaylistSO.collectionName, customPlaylistFileObject.author, customPlaylistFileObject.customPlaylistSO.coverImage.texture)
         {
             _customPlaylistFileObject = customPlaylistFileObject;

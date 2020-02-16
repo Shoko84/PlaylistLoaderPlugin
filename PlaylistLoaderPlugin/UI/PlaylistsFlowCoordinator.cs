@@ -1,5 +1,6 @@
 ﻿using BeatSaberMarkupLanguage;
 using HMUI;
+using PlaylistLoaderPlugin.Objects;
 using System;
 
 namespace PlaylistLoaderPlugin.UI
@@ -13,13 +14,17 @@ namespace PlaylistLoaderPlugin.UI
 
         public void Awake()
         {
-            _playlistsViewController = BeatSaberUI.CreateViewController<PlaylistsViewController>();
-            _playlistsNavigationController = BeatSaberUI.CreateViewController<NavigationController>();
-            _songsViewController = BeatSaberUI.CreateViewController<SongsViewController>();
-            _playlistDetailViewController = BeatSaberUI.CreateViewController<PlaylistDetailViewController>();
-            _playlistsViewController.songsViewController = _songsViewController;
-            _playlistsViewController.playlistDetailViewController = _playlistDetailViewController;
+            if(_playlistsViewController==null)
+            {
+                _playlistsViewController = BeatSaberUI.CreateViewController<PlaylistsViewController>();
+                _playlistsNavigationController = BeatSaberUI.CreateViewController<NavigationController>();
+                _songsViewController = BeatSaberUI.CreateViewController<SongsViewController>();
+                _playlistDetailViewController = BeatSaberUI.CreateViewController<PlaylistDetailViewController>();
+
+                _playlistsViewController.didSelectPlaylist += HandleDidSelectPlaylist;
+            }
         }
+
         protected override void DidActivate(bool firstActivation, ActivationType activationType)
         {
             try
@@ -29,7 +34,6 @@ namespace PlaylistLoaderPlugin.UI
                     showBackButton = true;
                     ProvideInitialViewControllers(_playlistsNavigationController, _playlistsViewController);
                     PushViewControllerToNavigationController(_playlistsNavigationController, _songsViewController);
-                    SetRightScreenViewController(_playlistDetailViewController);
                     title = "Playlist Manager";
                 }
             }
@@ -43,6 +47,13 @@ namespace PlaylistLoaderPlugin.UI
         {
             var mainFlow = BeatSaberMarkupLanguage.BeatSaberUI.MainFlowCoordinator;
             mainFlow.DismissFlowCoordinator(this);
+        }
+
+        private void HandleDidSelectPlaylist(CustomPlaylistFileObject selectedPlaylist)
+        {
+            _songsViewController.InitSongsList(selectedPlaylist);
+            SetRightScreenViewController(_playlistDetailViewController);
+            _playlistDetailViewController.Initialize(selectedPlaylist.description);
         }
     }
 }

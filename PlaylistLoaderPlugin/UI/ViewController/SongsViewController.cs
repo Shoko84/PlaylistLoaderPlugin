@@ -19,13 +19,12 @@ namespace PlaylistLoaderPlugin.UI
             base.DidActivate(firstActivation, type);
             if (firstActivation)
             {
-                InitSongsList(0);
+                InitSongsList(CustomPlaylistFileObject.playlists[0]);
             }
         }
-        public void InitSongsList(int index)
+        public void InitSongsList(CustomPlaylistFileObject customPlaylistFileObject)
         {
             customListTableData.data.Clear();
-            CustomPlaylistFileObject customPlaylistFileObject = CustomPlaylistFileObject.playlists[index];
             for(int i=0; i<customPlaylistFileObject.customPlaylistSO.beatmapLevelCollection.beatmapLevels.Length; i++)
             {
                 customListTableData.data.Add(new SongsCellInfo(customPlaylistFileObject.customPlaylistSO.beatmapLevelCollection.beatmapLevels[i]));
@@ -38,7 +37,7 @@ namespace PlaylistLoaderPlugin.UI
     public class SongsCellInfo : CustomListTableData.CustomCellInfo
     {
         private IPreviewBeatmapLevel _beatmapLevel;
-        private CancellationToken cancellationToken;
+        internal CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
         public SongsCellInfo(IPreviewBeatmapLevel beatmapLevel) : base(beatmapLevel.songName, beatmapLevel.songAuthorName + " [" + beatmapLevel.levelAuthorName + "]", null)
         {
@@ -47,6 +46,7 @@ namespace PlaylistLoaderPlugin.UI
         }
         protected async void LoadImage()
         {
+            CancellationToken cancellationToken = cancellationTokenSource.Token;
             Texture2D icon = await _beatmapLevel.GetCoverImageTexture2DAsync(cancellationToken);
             cancellationToken.ThrowIfCancellationRequested();
             base.icon = icon;
