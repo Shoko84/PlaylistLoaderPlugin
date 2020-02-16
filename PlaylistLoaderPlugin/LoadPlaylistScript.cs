@@ -13,6 +13,7 @@ namespace PlaylistLoaderPlugin
         {
             string[] playlistPaths = Directory.EnumerateFiles(Path.Combine(Environment.CurrentDirectory, "Playlists"), "*.*").Where(p => p.EndsWith(".json") || p.EndsWith(".bplist")).ToArray();
             List<CustomPlaylistSO> playlists = new List<CustomPlaylistSO>();
+            CustomPlaylistFileObject.playlists.Clear();
             for (int i = 0; i < playlistPaths.Length; i++)
             {
                 try

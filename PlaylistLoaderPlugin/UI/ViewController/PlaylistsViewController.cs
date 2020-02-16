@@ -25,13 +25,13 @@ namespace PlaylistLoaderPlugin.UI
                 PlaylistCollectionOverride.refreshPlaylists();
                 InitPlaylistList();
             }
+            customListTableData.tableView.ClearSelection();
         }
         private void InitPlaylistList()
         {
             for(int i=0; i<CustomPlaylistFileObject.playlists.Count; i++)
                 customListTableData.data.Add(new PlaylistCellInfo(CustomPlaylistFileObject.playlists[i]));
             customListTableData.tableView.ReloadData();
-            customListTableData.tableView.SelectCellWithIdx(0);
         }
         [UIAction("listSelect")]
         internal void Select(TableView tableView, int row)
