@@ -12,6 +12,9 @@ namespace PlaylistLoaderPlugin.UI
     public class SongsViewController : BSMLResourceViewController
     {
         public override string ResourceName => "PlaylistLoaderPlugin.UI.BSML.SongsView.bsml";
+        private CustomPlaylistFileObject _playlist;
+        private const int SONGSVIEW_SIZE = 7;
+        private int currentIndex = 0;
 
         [UIComponent("list")]
         public CustomListTableData customListTableData;
@@ -20,22 +23,50 @@ namespace PlaylistLoaderPlugin.UI
         {
             base.DidActivate(firstActivation, type);
             customListTableData.data.Clear();
+            _playlist = null;
             customListTableData.tableView.ReloadData();
         }
-        public void InitSongsList(CustomPlaylistFileObject customPlaylistFileObject)
+        public void InitSongsList(CustomPlaylistFileObject playlist)
         {
+            _playlist = playlist;
+            currentIndex = 0;
+            Scroll(currentIndex);
+        }
+        private void Scroll(int index)
+        {
+            int size = _playlist.customPlaylistSO.beatmapLevelCollection.beatmapLevels.Length;
+            int startIndex = index * SONGSVIEW_SIZE;
+            int endIndex = startIndex + SONGSVIEW_SIZE > size ? size : startIndex + SONGSVIEW_SIZE;
             customListTableData.data.Clear();
-            for(int i=0; i<customPlaylistFileObject.customPlaylistSO.beatmapLevelCollection.beatmapLevels.Length; i++)
+            for (int i = startIndex; i < endIndex; i++)
             {
-                customListTableData.data.Add(new SongsCellInfo(customPlaylistFileObject.customPlaylistSO.beatmapLevelCollection.beatmapLevels[i], CellDidSetImage));
+                customListTableData.data.Add(new SongsCellInfo(_playlist.customPlaylistSO.beatmapLevelCollection.beatmapLevels[i], CellDidSetImage));
             }
             customListTableData.tableView.ReloadData();
             customListTableData.tableView.SelectCellWithIdx(0);
         }
-
         internal void CellDidSetImage()
         {
             customListTableData.tableView.RefreshCellsContent();
+        }
+        [UIAction("pageUpPressed")]
+        internal void PageUpPressed()
+        {
+            if(_playlist!=null)
+            {
+                if (currentIndex > 0)
+                    Scroll(--currentIndex);
+            }
+        }
+        [UIAction("pageDownPressed")]
+        internal void PageDownPressed()
+        {
+            if (_playlist!=null)
+            {
+                int songsSize = _playlist.customPlaylistSO.beatmapLevelCollection.beatmapLevels.Length;
+                if ((currentIndex + 1) * SONGSVIEW_SIZE <= songsSize - (songsSize % SONGSVIEW_SIZE == 0 ? SONGSVIEW_SIZE : songsSize % SONGSVIEW_SIZE)) //Allows scrolling if more playlists exist in array.
+                    Scroll(++currentIndex);
+            }
         }
     }
 

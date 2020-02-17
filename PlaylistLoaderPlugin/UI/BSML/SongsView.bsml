@@ -1,8 +1,8 @@
 ﻿<vertical child-control-height='false'>
-  <page-button event-click='list#PageUp' on-click='pageUpPressed' direction='Up'></page-button>
   <horizontal anchor-min-y="1"  bg='panel-top' pad-left='10' pad-right='10' horizontal-fit='PreferredSize'>
     <text text='Songs' align='Center' font-size='6'></text>
   </horizontal>
+  <page-button event-click='list#PageUp' on-click='pageUpPressed' direction='Up'></page-button>
   <list id='list' expand-cell='true' select-cell='listSelect'></list>
-  <page-button id='songsPageDown' event-click='list#PageDown' on-click='pageDownPressed' direction='Down'></page-button>
+  <page-button event-click='list#PageDown' on-click='pageDownPressed' direction='Down'></page-button>
 </vertical>
