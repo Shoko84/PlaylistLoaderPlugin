@@ -53,7 +53,7 @@ namespace PlaylistLoaderPlugin.UI
         {
             _songsViewController.InitSongsList(selectedPlaylist);
             SetRightScreenViewController(_playlistDetailViewController);
-            _playlistDetailViewController.Initialize(selectedPlaylist.description);
+            _playlistDetailViewController.Initialize(selectedPlaylist.customPlaylistSO.collectionName, selectedPlaylist.author, selectedPlaylist.description);
         }
     }
 }

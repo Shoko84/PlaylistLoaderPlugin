@@ -2,7 +2,21 @@
   <horizontal anchor-min-y="1"  bg='panel-top' pad-left='10' pad-right='10' horizontal-fit='PreferredSize'>
     <text text='Playlist Information' align='Center' font-size='6'></text>
   </horizontal>
-  <horizontal pref-width='100' pref-height='65'>
-    <text-page id='playlistDescription' text=""></text-page>
+  <horizontal pref-width='100' align='Center' pad-left='4' child-expand-width='false'>
+    <horizontal><text id='name' text='Name' font-size='5' overflow-mode='Ellipsis'></text></horizontal>
+    <button text='Edit' font-size='5' preferred-height='6'></button>
   </horizontal>
+  <horizontal pref-width='100' align='Center' pad-left='4' child-expand-width='false'>
+    <horizontal><text id='author' text='Author' font-size='5' overflow-mode='Ellipsis'></text></horizontal>
+    <button text='Edit' font-size='5' preferred-height='6'></button>
+  </horizontal>
+  <vertical pad-top='2' pad-bottom='1'>
+    <horizontal pref-width='100' align='Center' pad-left='4' child-expand-width='false'>
+      <horizontal><text text='Description' font-size='5' overflow-mode='Ellipsis'></text></horizontal>
+      <button text='Edit' font-size='5' preferred-height='6'></button>
+    </horizontal>
+    <horizontal pref-width='100' pref-height='40'>
+      <text-page id='playlistDescription' text="" overflow-mode='Ellipsis'></text-page>
+    </horizontal>
+  </vertical>
 </vertical>

@@ -5,7 +5,6 @@ using PlaylistLoaderPlugin.Objects;
 using UnityEngine;
 using System.Threading;
 using System;
-using TMPro;
 
 namespace PlaylistLoaderPlugin.UI
 {
@@ -47,7 +46,11 @@ namespace PlaylistLoaderPlugin.UI
         }
         internal void CellDidSetImage()
         {
-            customListTableData.tableView.RefreshCellsContent();
+            try
+            {
+                customListTableData.tableView.RefreshCellsContent();
+            }
+            catch (Exception) { }
         }
         [UIAction("pageUpPressed")]
         internal void PageUpPressed()
