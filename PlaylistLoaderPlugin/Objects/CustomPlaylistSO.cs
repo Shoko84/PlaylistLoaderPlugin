@@ -32,7 +32,11 @@ namespace PlaylistLoaderPlugin.Objects
 		{
 			get
 			{
-				return Localization.Get(this._playListLocalizedName);
+				return Localization.Get(_playListLocalizedName);
+			}
+			set
+			{
+				_playListLocalizedName = value;
 			}
 		}
 

@@ -3,18 +3,54 @@ using System.Collections.Generic;
 using SongCore;
 using System.Linq;
 using System;
+using System.IO;
 
 namespace PlaylistLoaderPlugin.Objects
 {
     public class CustomPlaylistFileObject
     {
-        public CustomPlaylistSO customPlaylistSO { get; }
-        public string description { get; }
-        public string author { get; }
+        public CustomPlaylistSO customPlaylistSO;
+        private string _path = "";
+        private JObject _playlistJSON;
+        private string _description;
+        private string _author;
+
+        public string name
+        {
+            get => customPlaylistSO.collectionName;
+            set
+            {
+                customPlaylistSO.collectionName = value;
+                _playlistJSON["playlistTitle"] = value;
+                File.WriteAllText(_path, _playlistJSON.ToString());
+            }
+        }
+        public string description
+        {
+            get => _description;
+            set
+            {
+                _description = value;
+                _playlistJSON["playlistDescription"] = value;
+                File.WriteAllText(_path, _playlistJSON.ToString());
+            }
+        }
+        public string author
+        {
+            get => _author;
+            set
+            {
+                _author = value;
+                _playlistJSON["playlistAuthor"] = value;
+                File.WriteAllText(_path, _playlistJSON.ToString());
+            }
+        }
 
         public static List<CustomPlaylistFileObject> playlists = new List<CustomPlaylistFileObject>();
-        public CustomPlaylistFileObject(JObject playlistJSON)
+        public CustomPlaylistFileObject(JObject playlistJSON, string path)
         {
+            _playlistJSON = playlistJSON;
+            _path = path;
             if (playlistJSON["songs"] != null)
             {
                 JArray songs = (JArray)playlistJSON["songs"];
@@ -45,16 +81,16 @@ namespace PlaylistLoaderPlugin.Objects
                 CustomBeatmapLevelCollectionSO customBeatmapLevelCollection = CustomBeatmapLevelCollectionSO.CreateInstance(beatmapLevels.ToArray());
                 string playlistTitle = "Untitled Playlist";
                 string playlistImage = CustomPlaylistSO.DEFAULT_IMAGE;
-                description = "";
-                author = "";
+                _description = "";
+                _author = "";
                 if ((string)playlistJSON["playlistTitle"] != null)
                     playlistTitle = (string)playlistJSON["playlistTitle"];
                 if ((string)playlistJSON["image"] != null)
                     playlistImage = (string)playlistJSON["image"];
                 if ((string)playlistJSON["playlistDescription"] != null)
-                    description = (string)playlistJSON["playlistDescription"];
+                    _description = (string)playlistJSON["playlistDescription"];
                 if ((string)playlistJSON["playlistAuthor"] != null)
-                    author = (string)playlistJSON["playlistAuthor"];
+                    _author = (string)playlistJSON["playlistAuthor"];
                 customPlaylistSO = CustomPlaylistSO.CreateInstance(playlistTitle, playlistImage, customBeatmapLevelCollection);
             }
         }

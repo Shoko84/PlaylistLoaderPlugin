@@ -19,7 +19,7 @@ namespace PlaylistLoaderPlugin
                 try
                 {
                     JObject playlistJSON = JObject.Parse(File.ReadAllText(playlistPaths[i]));
-                    CustomPlaylistFileObject customPlaylistFileObject = new CustomPlaylistFileObject(playlistJSON);
+                    CustomPlaylistFileObject customPlaylistFileObject = new CustomPlaylistFileObject(playlistJSON, playlistPaths[i]);
                     playlists.Add(customPlaylistFileObject.customPlaylistSO);
                     customPlaylistFileObject.addSelf();
                     

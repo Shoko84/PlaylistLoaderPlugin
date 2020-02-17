@@ -13,7 +13,7 @@ namespace PlaylistLoaderPlugin.UI
         public override string ResourceName => "PlaylistLoaderPlugin.UI.BSML.PlaylistsView.bsml";
         private int currentIndex = 0;
         private const int PLAYLISTVIEW_SIZE = 7; //How many playlists can be seen at once in the screen
-        public Action<CustomPlaylistFileObject> didSelectPlaylist;
+        public Action<int> didSelectPlaylist;
 
         [UIComponent("list")]
         public CustomListTableData customListTableData;
@@ -38,10 +38,14 @@ namespace PlaylistLoaderPlugin.UI
                 customListTableData.data.Add(new PlaylistCellInfo(CustomPlaylistFileObject.playlists[i]));
             customListTableData.tableView.ReloadData();
         }
+        internal void refreshPlaylistList()
+        {
+            InitPlaylistList(currentIndex);
+        }
         [UIAction("listSelect")]
         internal void Select(TableView tableView, int row)
         {
-            didSelectPlaylist?.Invoke(CustomPlaylistFileObject.playlists[currentIndex*PLAYLISTVIEW_SIZE + row]);
+            didSelectPlaylist?.Invoke(currentIndex*PLAYLISTVIEW_SIZE + row);
         }
         [UIAction("pageUpPressed")]
         internal void PageUpPressed()
@@ -61,7 +65,7 @@ namespace PlaylistLoaderPlugin.UI
     public class PlaylistCellInfo : CustomListTableData.CustomCellInfo
     {
         public CustomPlaylistFileObject _customPlaylistFileObject { get; }
-        public PlaylistCellInfo(CustomPlaylistFileObject customPlaylistFileObject) : base(customPlaylistFileObject.customPlaylistSO.collectionName, customPlaylistFileObject.author, customPlaylistFileObject.customPlaylistSO.coverImage.texture)
+        public PlaylistCellInfo(CustomPlaylistFileObject customPlaylistFileObject) : base(customPlaylistFileObject.name, customPlaylistFileObject.author, customPlaylistFileObject.customPlaylistSO.coverImage.texture)
         {
             _customPlaylistFileObject = customPlaylistFileObject;
         }

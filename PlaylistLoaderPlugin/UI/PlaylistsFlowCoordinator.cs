@@ -22,9 +22,11 @@ namespace PlaylistLoaderPlugin.UI
                 _playlistDetailViewController = BeatSaberUI.CreateViewController<PlaylistDetailViewController>();
 
                 _playlistsViewController.didSelectPlaylist += HandleDidSelectPlaylist;
+                _playlistDetailViewController.didChangeName += HandleDidChangeName;
+                _playlistDetailViewController.didChangeAuthor += HandleDidChangeAuthor;
+                _playlistDetailViewController.didChangeDescription += HandleDidChangeDescription;
             }
         }
-
         protected override void DidActivate(bool firstActivation, ActivationType activationType)
         {
             try
@@ -42,18 +44,37 @@ namespace PlaylistLoaderPlugin.UI
                 Logger.log.Error(ex);
             }
         }
-
         protected override void BackButtonWasPressed(ViewController topViewController)
         {
             var mainFlow = BeatSaberMarkupLanguage.BeatSaberUI.MainFlowCoordinator;
             mainFlow.DismissFlowCoordinator(this);
-        }
 
-        private void HandleDidSelectPlaylist(CustomPlaylistFileObject selectedPlaylist)
+        }
+        private void HandleDidSelectPlaylist(int index)
         {
+            CustomPlaylistFileObject selectedPlaylist = CustomPlaylistFileObject.playlists[index];
             _songsViewController.InitSongsList(selectedPlaylist);
             SetRightScreenViewController(_playlistDetailViewController);
-            _playlistDetailViewController.Initialize(selectedPlaylist.customPlaylistSO.collectionName, selectedPlaylist.author, selectedPlaylist.description);
+            _playlistDetailViewController.Initialize(selectedPlaylist.name, selectedPlaylist.author, selectedPlaylist.description, index);
+        }
+        private void HandleDidChangeName(string name, int index)
+        {
+            _playlistDetailViewController.setName(name);
+            CustomPlaylistFileObject.playlists[index].name = name;
+            Logger.log.Critical(CustomPlaylistFileObject.playlists[index].name);
+            _playlistsViewController.refreshPlaylistList();
+        }
+        private void HandleDidChangeAuthor(string author, int index)
+        {
+            _playlistDetailViewController.setAuthor(author);
+            CustomPlaylistFileObject.playlists[index].author = author;
+            _playlistsViewController.refreshPlaylistList();
+        }
+        private void HandleDidChangeDescription(string description, int index)
+        {
+            _playlistDetailViewController.setDescription(description);
+            CustomPlaylistFileObject.playlists[index].description = description;
+            _playlistsViewController.refreshPlaylistList();
         }
     }
 }
