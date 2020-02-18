@@ -14,6 +14,7 @@ namespace PlaylistLoaderPlugin.UI
         private int currentIndex = 0;
         private const int PLAYLISTVIEW_SIZE = 7; //How many playlists can be seen at once in the screen
         public Action<int> didSelectPlaylist;
+        private int _row;
 
         [UIComponent("list")]
         public CustomListTableData customListTableData;
@@ -45,6 +46,7 @@ namespace PlaylistLoaderPlugin.UI
         [UIAction("listSelect")]
         internal void Select(TableView tableView, int row)
         {
+            _row = row;
             didSelectPlaylist?.Invoke(currentIndex*PLAYLISTVIEW_SIZE + row);
         }
         [UIAction("pageUpPressed")]
@@ -59,6 +61,16 @@ namespace PlaylistLoaderPlugin.UI
             int playlistsSize = CustomPlaylistFileObject.playlists.Count;
             if ((currentIndex + 1) * PLAYLISTVIEW_SIZE <= playlistsSize - (playlistsSize % PLAYLISTVIEW_SIZE==0?PLAYLISTVIEW_SIZE:playlistsSize%PLAYLISTVIEW_SIZE)) //Allows scrolling if more playlists exist in array.
                 InitPlaylistList(++currentIndex);
+        }
+
+        [UIAction("insertPressed")]
+        internal void namePressed(string name)
+        {
+            if (name == "")
+                return;
+            CustomPlaylistFileObject.playlists.Insert(_row, new CustomPlaylistFileObject(name));
+            Logger.log.Critical("Inserted: " + name);
+            refreshPlaylistList();
         }
     }
 

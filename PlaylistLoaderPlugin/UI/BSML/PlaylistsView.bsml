@@ -1,8 +1,12 @@
 ﻿<vertical child-control-height='false'>
-  <horizontal anchor-min-y="1"  bg='panel-top' pad-left='10' pad-right='10' horizontal-fit='PreferredSize'>
-    <text text='Playlists' align='Center' font-size='6'></text>
+  <horizontal spacing='20' pad-left='33' pad-right='10' child-expand-width='false'>
+    <horizontal anchor-min-y='1'  bg='panel-top' pad-left='10' pad-right='10' horizontal-fit='PreferredSize'>
+      <text text='Playlists' align='Center' font-size='6'></text>
+    </horizontal>
+    <button text='+' font-size='6' pref-width='1' min-width='1' click-event='open-insertKeyboard'></button>
+    <modal-keyboard show-event='open-insertKeyboard' hide-event='close-insertKeyboard,closeallkeyboards' clear-on-open='true' on-enter='insertPressed'></modal-keyboard>
   </horizontal>
   <page-button event-click='list#PageUp' on-click='pageUpPressed' direction='Up'></page-button>
-  <list id='list' expand-cell='true' select-cell='listSelect'></list>
+  <list id='list' select-cell='listSelect' align='Center'></list>
   <page-button event-click='list#PageDown' on-click='pageDownPressed' direction='Down'></page-button>
 </vertical>

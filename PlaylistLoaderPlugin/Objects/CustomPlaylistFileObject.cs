@@ -47,6 +47,7 @@ namespace PlaylistLoaderPlugin.Objects
         }
 
         public static List<CustomPlaylistFileObject> playlists = new List<CustomPlaylistFileObject>();
+
         public CustomPlaylistFileObject(JObject playlistJSON, string path)
         {
             _playlistJSON = playlistJSON;
@@ -94,6 +95,36 @@ namespace PlaylistLoaderPlugin.Objects
                 customPlaylistSO = CustomPlaylistSO.CreateInstance(playlistTitle, playlistImage, customBeatmapLevelCollection);
             }
         }
+
+        public CustomPlaylistFileObject(string title)
+        {
+            _playlistJSON = new JObject();
+            string directory = Path.Combine(Environment.CurrentDirectory, "Playlists");
+            string fileName = title.ToLower().Replace(' ', '_');
+            if(!File.Exists(Path.Combine(directory, fileName + ".json")))
+                _path = Path.Combine(directory, fileName + ".json");
+            else
+            {
+                int i = 1;
+                bool written = false;
+                while (!written)
+                {
+                    if (!File.Exists(Path.Combine(directory, fileName + "_" + i + ".json")))
+                    {
+                        _path = Path.Combine(directory, fileName + "_" + i + ".json");
+                        written = true;
+                    }
+                    else
+                        i++;
+                }
+            }
+            customPlaylistSO = CustomPlaylistSO.CreateInstance(title, CustomPlaylistSO.DEFAULT_IMAGE, CustomBeatmapLevelCollectionSO.CreateInstance(new IPreviewBeatmapLevel[0]));
+            name = title;
+            author = "";
+            description = "";
+
+        }
+
         private static IPreviewBeatmapLevel MatchSong(string hash)
         {
             if (!SongCore.Loader.AreSongsLoaded || SongCore.Loader.AreSongsLoading)
